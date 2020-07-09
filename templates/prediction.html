@@ -103,6 +103,12 @@
 			left: 50%;
 			margin-left: -200px;
 		}
+		.image-result{
+			position:fixed;
+			top: 0; /* or the distance from top page edge */
+			left: 0;
+   			max-height: 100%;
+		}
 		
 
 		@keyframes bobble {
@@ -130,12 +136,17 @@
 				right: 30%;
 			}
 		}
+		
 
 	</style>
 
 </head>
 <body>
-	<img src="data:;base64,{{ imagebase64 }}" class="logo" width="250">
+	
+	<div class="image-result">
+		<img src="data:;base64,{{ imagebase64 }}" class="logo" width="250">
+	</div>
+	
 	
 	<h1>Prediction Result</h1>
 
