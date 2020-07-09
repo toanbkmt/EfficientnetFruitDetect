@@ -29,7 +29,7 @@ def get_fruit_name(image_bytes):
     probs = F.softmax(outputs, dim=1)
       
     # Top probs
-    top_probs, top_labs = probs.topk(k=5)
+    top_probs, top_labs = probs.cpu().topk(k=5)
     top_probs = top_probs.detach().numpy().tolist()[0]
     top_labs = top_labs.detach().numpy().tolist()[0]
       

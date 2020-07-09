@@ -11,18 +11,30 @@ from copy import deepcopy
 from torch import optim
 
 def get_model():
-    #Config load From Model had use Training
-    model = create_model('efficientnet_b3', pretrained=True)
+    #### Config load From Model had use Training
+    ## can  change model apply with model use train
+    # List model is can use with had already train: efficientnet_es, efficientnet_b3
+    use_model ='efficientnet_b3'
+    model = create_model(use_model, pretrained=True)
     # Set total fruit index :130 +1
     n_class= 131
+
     model.classifier = nn.Linear(model.classifier.in_features, n_class)
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(),
-                      lr=0.001,momentum=0.9,
-                      nesterov=True,
-                      weight_decay=0.0001)
+    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
+    #optimizer = optim.SGD(model.parameters(), lr=0.001,momentum=0.9,nesterov=True,weight_decay=0.0001)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
-    CHECK_POINT_PATH = 'D:/Learns/check_point/CHECKPOINT_EFFICIENTNET_B3_TRAIN_SGD.pth'
+
+    CHECK_POINT_PATH = ''
+    # Config path load check point base on current model using train
+    if use_model == 'efficientnet_b3':
+        CHECK_POINT_PATH = 'D:/Learns/check_point/CHECKPOINT_EFFICIENTNET_B3_TRAIN_SGD.pth'
+    if use_model == 'efficientnet_es':
+        CHECK_POINT_PATH = 'D:/Learns/check_point/CHECKPOINT_EFFICIENTNET_ES_TRAIN_SGD.pth'
+
+    print('Check point path: '+ CHECK_POINT_PATH)
+
+    # load check point
     checkpoint = torch.load(CHECK_POINT_PATH, map_location='cpu')
     model.load_state_dict(checkpoint['model_state_dict'])
     best_model_wts = copy.deepcopy(model.state_dict())
