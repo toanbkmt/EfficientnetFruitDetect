@@ -20,7 +20,7 @@ def home():
         #show image in view result base64 encode
         image_base_64_result = b64encode(image).decode("utf-8")
 
-         #prediction, probs = get_fruit_name(image_bytes=image)
+        #prediction, probs = get_fruit_name(image_bytes=image)
         top_probs, top_labels, top_fruits = get_fruit_name(image_bytes=image)
 
         print(top_fruits)
@@ -28,6 +28,8 @@ def home():
         print(top_probs)
 
         return render_template('prediction.html', fruits=top_fruits, name=top_labels, probabilities=top_probs, imagebase64=image_base_64_result)
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True)

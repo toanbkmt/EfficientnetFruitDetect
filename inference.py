@@ -1,6 +1,5 @@
 import json
 import torch.nn.functional as F
-#from commons import get_model, get_tensor
 import torch
 import io
 import torch.nn as nn
@@ -21,7 +20,7 @@ model = get_model()
 model.eval()
     
 def get_fruit_name(image_bytes):
-    fruit_names = []
+    
     tensor = get_tensor(image_bytes)
     outputs = model.forward(tensor)
     

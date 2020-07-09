@@ -80,7 +80,7 @@ if __name__ == '__main__':
     # batch_size = 32 for MixNet_s
     batch_size = 32
     data_loader = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size,
-                                                shuffle=True, num_workers=4, pin_memory = True)
+                                                shuffle=True, num_workers=6, pin_memory = True)
                 for x in ['train', 'val']}
 
     dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
@@ -127,30 +127,27 @@ if __name__ == '__main__':
     #### to show some  images
     showimage(data_loader['val'],2,cat_to_name)
 
+    ## Config apply pretraind model 
+   # List model is can use with had already train: efficientnet_es, efficientnet_b3
+    use_model ='efficientnet_es'
+    model = create_model(use_model, pretrained=True)
 
-    #model = EfficientNet.from_pretrained('efficientnet-b3')
-    #model = timm.create_model('tf_efficientnet_b6', pretrained = True)
-    #from efficientnet_pytorch import EfficientNet
-    #model = EfficientNet.from_pretrained('efficientnet-b6')
-    model = create_model('mixnet_s', pretrained=True)
     # Create classifier
     for param in model.parameters():
         param.requires_grad = True
+
     #num_in_features = 1536 
+    # Important set 
     n_classes = 131
 
     model.classifier = nn.Linear(model.classifier.in_features, n_classes)
 
     criterion = nn.CrossEntropyLoss()
     #optimizer = Nadam(model.parameters(), lr=0.001)
-    #optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
-    optimizer = optim.SGD(model.parameters(), 
-                        lr=0.001,momentum=0.9,
-                        nesterov=True,
-                        weight_decay=0.0001)
+    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
+    #optimizer = optim.SGD(model.parameters(),lr=0.001,momentum=0.9,nesterov=True,weight_decay=0.0001)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
-
-
+    
 
     model.class_to_idx = image_datasets['train'].class_to_idx
     model.idx_to_class = {
@@ -271,7 +268,7 @@ if __name__ == '__main__':
 
 
 
-    CHECK_POINT_PATH = 'D:/Learns/check_point/MixNetS_SGD.pth'
+    CHECK_POINT_PATH = 'D:/Learns/check_point/CHECKPOINT_EFFICIENTNET_ES_TRAIN_SGD.pth'
     try:
         checkpoint = torch.load(CHECK_POINT_PATH)
         print("checkpoint loaded")
