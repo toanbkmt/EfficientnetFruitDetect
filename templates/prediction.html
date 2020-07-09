@@ -142,14 +142,12 @@
 
 </head>
 <body>
-	
+	<!-- Show image input selected-->
 	<div class="image-result">
 		<img src="data:;base64,{{ imagebase64 }}" class="logo" width="250">
-	</div>
-	
-	
+	</div>	
 	<h1>Prediction Result</h1>
-
+	<!--show result prediction-->
 	<p class="predict">Fruit/Vegetable Detected: {{ fruits }} </p>
 	<p class="classid">Class ID: {{ name }}</p>
 	<p class="probabilities">Probabilities: {{ probabilities }}</p>	
@@ -158,7 +156,7 @@
 	<br>
 	<br>
 	<br>
+	<br>
 	<p> About <a href="https://github.com/toanbkmt">Toàn Vinh</a></p>
-
 </body>
 </html>
