@@ -22,10 +22,7 @@ def home():
 
         #prediction, probs = get_fruit_name(image_bytes=image)
         top_probs, top_labels, top_fruits = get_fruit_name(image_bytes=image)
-
-        print(top_fruits)
-        print(top_labels)
-        print(top_probs)
+      
 
         return render_template('prediction.html', fruits=top_fruits, name=top_labels, probabilities=top_probs, imagebase64=image_base_64_result)
 
