@@ -21,16 +21,16 @@ def get_model():
 
     model.classifier = nn.Linear(model.classifier.in_features, n_class)
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
-    #optimizer = optim.SGD(model.parameters(), lr=0.001,momentum=0.9,nesterov=True,weight_decay=0.0001)
+    #optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
+    optimizer = optim.SGD(model.parameters(), lr=0.001,momentum=0.9,nesterov=True,weight_decay=0.0001)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
 
     CHECK_POINT_PATH = ''
     # Config path load check point base on current model using train
     if use_model == 'efficientnet_b3':
-        CHECK_POINT_PATH = 'D:/Learns/check_point/CHECKPOINT_EFFICIENTNET_B3_TRAIN_SGD.pth'
+        CHECK_POINT_PATH = 'D:/Learns/check_point/BK_1_CHECKPOINT_EFFICIENTNET_B3_TRAIN_SGD_10_07_20.pth'
     if use_model == 'efficientnet_es':
-        CHECK_POINT_PATH = 'D:/Learns/check_point/CHECKPOINT_EFFICIENTNET_ES_TRAIN_SGD.pth'
+        CHECK_POINT_PATH = 'D:/Learns/check_point/CHECKPOINT_MODEL_EFFICIENTNET_ES_TRAIN_SGD.pth'
 
     print('Check point path: '+ CHECK_POINT_PATH)
 

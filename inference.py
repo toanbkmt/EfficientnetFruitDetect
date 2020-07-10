@@ -29,12 +29,13 @@ def get_fruit_name(image_bytes):
       
     # Top probs
     top_probs, top_labs = probs.cpu().topk(k=5)
-    top_probs = top_probs.detach().numpy().tolist()
-    top_labs = top_labs.detach().numpy().tolist()
+    top_probs = top_probs.detach().numpy().tolist()[0]
+    top_labs = top_labs.detach().numpy().tolist()[0]
       
     # Convert indices to classes
     idx_to_class = {val: key for key, val in class_to_idx.items()}
     top_labels = [idx_to_class[lab] for lab in top_labs]
     top_fruits = [cat_to_name[idx_to_class[lab]] for lab in top_labs]
+    
     return top_probs, top_labels, top_fruits
     

@@ -91,7 +91,7 @@ if __name__ == '__main__':
     print(device)
     """
     # Label mapping
-    with open('cat_to_name.json', 'r') as f:
+    with open('cat_to_name-v2.json', 'r') as f:
         cat_to_name = json.load(f)
     """
     ### cat_to_name labels
@@ -128,8 +128,8 @@ if __name__ == '__main__':
     showimage(data_loader['val'],2,cat_to_name)
 
     ## Config apply pretraind model 
-   # List model is can use with had already train: efficientnet_es, efficientnet_b3
-    use_model ='efficientnet_es'
+    ## List model is can use with had already train: efficientnet_es, efficientnet_b3
+    use_model ='efficientnet_b3'
     model = create_model(use_model, pretrained=True)
 
     # Create classifier
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
     #optimizer = optim.SGD(model.parameters(),lr=0.001,momentum=0.9,nesterov=True,weight_decay=0.0001)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
-    
+
 
     model.class_to_idx = image_datasets['train'].class_to_idx
     model.idx_to_class = {
@@ -162,9 +162,9 @@ if __name__ == '__main__':
     list(model.idx_to_class.items())
 
 
-
+    ### important  fit model with cuda or cpu
     model.to(device)
-
+    
     def train_model(model, criterion, optimizer, scheduler, num_epochs=50, checkpoint = None):
         since = time.time()
 
@@ -248,13 +248,7 @@ if __name__ == '__main__':
                                 CHECK_POINT_PATH
                                 )
                     print(f'New record loss is SAVED: {epoch_loss}')
-                """if phase == 'val' and epoch_loss < best_loss:
-                    best_loss = epoch_loss
-                    iteration_change_loss = 0
-
-                if iteration_change_loss == 10: #choose a number of epochs for patience
-                    print('Early stopping after {0} iterations without the decrease of the val loss'. format(iteration_change_loss))
-                    break"""
+               
             print()
         time_elapsed = time.time() - since
         print('Training complete in {:.0f}m {:.0f}s'.format(
@@ -267,8 +261,9 @@ if __name__ == '__main__':
         return model, best_loss, best_acc
 
 
-
+    # Config Check point path
     CHECK_POINT_PATH = 'D:/Learns/check_point/CHECKPOINT_EFFICIENTNET_ES_TRAIN_SGD.pth'
+
     try:
         checkpoint = torch.load(CHECK_POINT_PATH)
         print("checkpoint loaded")
@@ -283,7 +278,7 @@ if __name__ == '__main__':
                                                     optimizer,
                                                     scheduler,
                                                     num_epochs = 50,
-                                                    checkpoint = None#torch.load(CHECK_POINT_PATH)
+                                                    checkpoint = None
                                                     ) 
                                                     
     torch.save({'model_state_dict': model.state_dict(),
