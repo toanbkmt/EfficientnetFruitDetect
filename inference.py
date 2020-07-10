@@ -16,6 +16,10 @@ with open('labels-v2.txt', 'r') as f:
     classes = f.readline()
     
 model = get_model()
+
+print('Load model')
+
+print(model)
  
 model.eval()
     
@@ -28,7 +32,7 @@ def get_fruit_name(image_bytes):
     probs = F.softmax(outputs, dim=1)
       
     # Top probs
-    top_probs, top_labs = probs.cpu().topk(k=5)
+    top_probs, top_labs = probs.cpu().topk(k=6)
     top_probs = top_probs.detach().numpy().tolist()[0]
     top_labs = top_labs.detach().numpy().tolist()[0]
       
