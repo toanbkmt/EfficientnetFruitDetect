@@ -39,7 +39,7 @@ now go to the local server something like this - http://127.0.0.1:5000/ and see 
 | **Framework**    | PyTorch|
 | **Pretrained Models**  | sử dụng weight đã được train sẵn [https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/efficientnet_b3_ra-a5e2fbc7.pth](https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/efficientnet_b3_ra-a5e2fbc7.pth) [https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/efficientnet_es_ra-f111e99c.pth](https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/efficientnet_es_ra-f111e99c.pth)|
 | **Datasets**     |Mô hình được train với bộ dữ liệu 130 loại quả tại: https://www.kaggle.com/moltean/fruits/data|
-| **Level of difficulty**| Normal +, có thể train lại với tập dữ liệu khác và model khác tốc độ tùy thuộc vào CPU & CPU và hình ảnh input|
+| **Level of difficulty**| Normal +, có thể train lại với tập dữ liệu khác và model khác tốc độ tùy thuộc vào CPU & GPU & data input|
 
 ## Test Result  
 

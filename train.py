@@ -78,7 +78,7 @@ if __name__ == '__main__':
     # batch_size = 16 for EfficientNet_B6
     # batch_size = 8 for EfficientNet_B7
     # batch_size = 32 for MixNet_s
-    batch_size = 32
+    batch_size = 64
     data_loader = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=batch_size,
                                                 shuffle=True, num_workers=6, pin_memory = True)
                 for x in ['train', 'val']}
@@ -144,8 +144,8 @@ if __name__ == '__main__':
 
     criterion = nn.CrossEntropyLoss()
     #optimizer = Nadam(model.parameters(), lr=0.001)
-    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
-    #optimizer = optim.SGD(model.parameters(),lr=0.001,momentum=0.9,nesterov=True,weight_decay=0.0001)
+    #optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.0001)
+    optimizer = optim.SGD(model.parameters(),lr=0.001,momentum=0.9,nesterov=True,weight_decay=0.0001)
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
 
 
